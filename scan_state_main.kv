@@ -1,0 +1,87 @@
+#: import SlideTransition kivy.uix.screenmanager.SlideTransition
+#: import Window kivy.core.window.Window
+#: import mapview mapview.mapview
+
+ScreenManagement:
+    transition: SlideTransition(direction="left")
+    MainScreen:
+    BuildProject:
+    LocationSet:
+
+
+<MainScreen>:
+    name: "main"
+    AnchorLayout:
+        Button:
+            size_hint: 0.1,0.1
+            color: 0,1,0,1
+            font_size: 20
+            text: "+"
+            on_release: 
+                app.root.current = "newProject"
+
+
+<BuildProject>:
+    name: "newProject"
+    BoxLayout:
+        orientation: "vertical"
+        AnchorLayout:
+            GridLayout:
+                size_hint: .8, .3
+                cols: 2
+                Label:
+                    size_hint_x: .1
+                    text: "Name: "
+                    font_size: sp(15)
+                    font_color: 1,0,0,0
+                TextInput:
+                    id: input_name
+                    multiline: False
+                    size_hint_x: .3
+                Label:
+                    size_hint_x: .1
+                    text: "Location: "
+                    font_size: sp(15)
+                    font_color: 1,0,0,0
+                TextInput:
+                    id: input_location
+                    multiline: False
+                    size_hint_x: .3
+                Label:
+                    size_hint_x: .1
+                    text: "test update: "
+                    font_size: sp(15)
+                    font_color: 1,0,0,0
+                TextInput:
+                    id: input_fast_text
+                    multiline: False
+                    size_hint_x: .3
+                    on_text:
+                        root.update_text(input_fast_text)
+        AnchorLayout:
+            Button:
+                text: "submit"
+                size_hint: .1, .1
+                on_release:
+                    root.submit_data(input_name, input_location)
+                    app.root.current = "LocationSet"
+
+<LocationSet>:
+    name: "LocationSet"
+    BoxLayout:
+        orientation: "vertical"
+        GridLayout:
+            cols: 2
+            Label:
+                text: "Begin typing location..."
+                size_hint: .7, .2
+                font_size: sp(15)
+            TextInput:
+                size_hint: .3, .2
+        MapWindow:
+            size_hint: 1,1
+
+<MapWindow>:
+    name: "MapWindow"
+    mapview:
+        
